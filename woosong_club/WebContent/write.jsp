@@ -8,6 +8,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
+<script src="https://cdn.tiny.cloud/1/n1twv8llejkw8x78cq0dtyftceex78bki1qygwj3hqic91r4/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        language: 'ko_KR', // 한국어 언어 설정
+        plugins: 'image link', // 이미지 및 링크 플러그인 추가
+        file_picker_types: 'file image media',
+        block_unsupported_drop: false,
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image link', // 툴바에 추가할 기능 설정
+        height: 350, // 에디터의 높이 설정
+    });
+</script>
+
 <title>우송 동아리방</title>
 </head>
 <body>
@@ -84,16 +97,31 @@
 							</tr>
 							<tr>
 								<td>
-									<textarea class="form-control" placeholder="글 내용" name="boardContent" maxlength="2048" style="height: 350px;"></textarea>
+									<textarea class="form-control" class="TinyMCE" placeholder="글 내용" name="boardContent" maxlength="2048" style="height: 350px;"></textarea>
+										<script>
+										    function convertHtmlToText() {
+										        var editorContent = tinymce.activeEditor.getContent(); // TinyMCE 에디터의 내용을 가져옴
+										        var div = document.createElement("div");
+										        div.innerHTML = editorContent;
+										        var textContent = div.textContent || div.innerText; // 브라우저 호환성을 위해 두 가지 속성을 모두 체크
+										
+										        // 텍스트 내용을 textarea에 넣어줌
+										        document.getElementById("boardContentText").value = textContent;
+										    }
+										
+										    // 글쓰기 버튼 클릭 시 convertHtmlToText 함수 호출
+										    document.getElementById("writeButton").addEventListener("click", convertHtmlToText);
+										</script>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
+					<input type="submit" id="writeButton" class="btn btn-primary pull-right" value="글쓰기">
 			</form>
 		</div>
 	</div>
-	
+	<input type="hidden" id="boardContentText" name="boardContentText">
+
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>

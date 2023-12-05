@@ -8,6 +8,7 @@ public class Board {
 	private String boardDate;
 	private String boardContent;
 	private int boardAvailable;
+	private String boardContentText;
 	
 	
 	public int getBoardID() {
@@ -46,7 +47,11 @@ public class Board {
 	public void setBoardAvailable(int boardAvailable) {
 		this.boardAvailable = boardAvailable;
 	}
-	
-	
+	public String getBoardContentText() {
+        return boardContentText;
+    }
+    public void setBoardContentText(String boardContentText) {
+        this.boardContentText = boardContentText;
+    }
 	
 }

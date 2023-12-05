@@ -113,7 +113,19 @@
                             board.getBoardDate().substring(11, 13) + ":" + board.getBoardDate().substring(14, 16) %></td>
                     </tr>
                     <tr style="min-height: 500px;">
-                        <td colspan="6" style="text-align: left; padding: 20px;"><%= board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></td>
+	                   <%
+						    String boardContentText = board.getBoardContent();
+						    if (boardContentText != null) {
+						        boardContentText = boardContentText.replaceAll(" ", "&nbsp;")
+						            .replaceAll("<", "&lt;")
+						            .replaceAll(">", "&gt;")
+						            .replaceAll("\n", "<br>");
+						    } else {
+						        boardContentText = ""; // 또는 다른 기본값 설정
+						    }
+						%>
+                        <td colspan="6" style="text-align: left; padding: 20px;"><%= board.getBoardContentText() %></td>
+
                     </tr>
                 </tbody>
             </table>

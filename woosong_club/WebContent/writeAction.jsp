@@ -6,6 +6,13 @@
 <jsp:useBean id="board" class="board.Board" scope="page"/>
 <jsp:setProperty name="board" property="boardTitle"/>
 <jsp:setProperty name="board" property="boardContent"/>
+<jsp:setProperty name="board" property="boardContentText"/>
+
+<%
+    // boardContentText 설정
+    String boardContent = request.getParameter("boardContent");
+    board.setBoardContentText(boardContent);
+%>
 
 <!DOCTYPE html>
 <html>
@@ -38,7 +45,7 @@
 	    	            script.println("</script>");
 	    	    	} else {
 	    	    		BoardDAO boardDAO = new BoardDAO();
-	    	            int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent());
+	    	    		int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent(), board.getBoardContentText());
 	    	            if (result == -1) { // DB 오류 -> 아이디 중복
 	    	                PrintWriter script = response.getWriter();
 	    	                script.println("<script>");

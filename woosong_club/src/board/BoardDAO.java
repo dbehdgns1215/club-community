@@ -52,8 +52,8 @@ public class BoardDAO {
 		return -1; // DB 오류
 	}
 	
-	public int write(String boardTitle, String userID, String boardContent) {
-		String SQL = "INSERT INTO BOARD VALUES (?, ?, ?, ?, ?, ?)";
+	public int write(String boardTitle, String userID, String boardContent, String boardContentText) {
+		String SQL = "INSERT INTO BOARD VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1,  getNext()); // boardID
@@ -62,6 +62,7 @@ public class BoardDAO {
 			pstmt.setString(4,  getDate()); // boardDate
 			pstmt.setString(5,  boardContent); // boardContent
 			pstmt.setInt(6,  1); // 삭제 가능한 상태. boardAvailable
+			pstmt.setString(7, boardContentText);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -86,6 +87,7 @@ public class BoardDAO {
 				board.setBoardDate(rs.getString(4));
 				board.setBoardContent(rs.getString(5));
 				board.setBoardAvailable(rs.getInt(6));
+				board.setBoardContentText(rs.getString(7));
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -123,6 +125,7 @@ public class BoardDAO {
 				board.setBoardDate(rs.getString(4));
 				board.setBoardContent(rs.getString(5));
 				board.setBoardAvailable(rs.getInt(6));
+				board.setBoardContentText(rs.getString(7));
 				return board;
 			}
 		} catch (Exception e) {
@@ -131,13 +134,14 @@ public class BoardDAO {
 		return null;
 	}
 	
-	public int update(int boardID, String boardTitle, String boardContent) {
-		String SQL = "UPDATE BOARD SET boardTitle = ?, boardContent = ? WHERE boardID = ?";
+	public int update(int boardID, String boardTitle, String boardContent, String boardContentText) {
+		String SQL = "UPDATE BOARD SET boardTitle = ?, boardContent = ? boardContentText = ? WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1,  boardTitle); // boardID
 			pstmt.setString(2,  boardContent); // boardTitle
 			pstmt.setInt(3,  boardID); // 삭제 가능한 상태. boardAvailable
+			pstmt.setString(4,  boardContentText); // boardTitle
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
