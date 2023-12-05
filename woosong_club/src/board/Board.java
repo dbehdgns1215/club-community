@@ -59,5 +59,4 @@ public class Board {
 	public void setTopicID(int topicID) {
 		this.topicID = topicID;
 	}
-	
 }
