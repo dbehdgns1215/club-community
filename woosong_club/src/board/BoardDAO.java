@@ -21,6 +21,8 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
 	public String getDate() {
@@ -52,8 +54,8 @@ public class BoardDAO {
 		return -1; // DB 오류
 	}
 	
-	public int write(String boardTitle, String userID, String boardContent, String boardContentText) {
-		String SQL = "INSERT INTO BOARD VALUES (?, ?, ?, ?, ?, ?, ?)";
+	public int write(String boardTitle, String userID, String boardContent, String boardContentText, int topicID) {
+		String SQL = "INSERT INTO BOARD VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1,  getNext()); // boardID
@@ -63,6 +65,7 @@ public class BoardDAO {
 			pstmt.setString(5,  boardContent); // boardContent
 			pstmt.setInt(6,  1); // 삭제 가능한 상태. boardAvailable
 			pstmt.setString(7, boardContentText);
+			pstmt.setInt(8,  topicID);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,6 +91,7 @@ public class BoardDAO {
 				board.setBoardContent(rs.getString(5));
 				board.setBoardAvailable(rs.getInt(6));
 				board.setBoardContentText(rs.getString(7));
+				board.setTopicID(rs.getInt(8));
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -95,6 +99,54 @@ public class BoardDAO {
 		}
 		return list;
 	}
+	
+	// 공지사항
+	public ArrayList<Board> getNoticeList() {
+        ArrayList<Board> list = new ArrayList<>();
+
+        try {
+            String SQL = "SELECT * FROM board WHERE topicID = 1 AND boardAvailable = 1 ORDER BY boardID DESC";
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Board board = new Board();
+                board.setBoardID(rs.getInt(1));
+                board.setBoardTitle(rs.getString(2));
+                board.setUserID(rs.getString(3));
+                board.setBoardDate(rs.getString(4));
+                board.setBoardContent(rs.getString(5));
+                board.setBoardAvailable(rs.getInt(6));
+                board.setBoardContentText(rs.getString(7));
+                board.setTopicID(rs.getInt(8));
+                list.add(board);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return list;
+    }
+	
+	public String getTopicName(int topicID) {
+        String topicName = "";
+        // 데이터베이스 또는 다른 소스에서 주제 이름을 가져오는 로직을 구현합니다.
+        // switch 문이나 if-else if 문을 사용할 수 있습니다.
+        switch (topicID) {
+            case 1:
+                topicName = "공지사항";
+                break;
+            case 2:
+                topicName = "홍보";
+                break;
+            case 3:
+                topicName = "동아리명";
+                break;
+            default:
+                topicName = "기타";
+                break;
+        }
+        return topicName;
+    }
 	
 	public boolean nextPage(int pageNumber) {
 		String SQL = "SELECT * FROM BOARD WHERE boardID < ? AND boardAvailable = 1";
@@ -126,6 +178,7 @@ public class BoardDAO {
 				board.setBoardContent(rs.getString(5));
 				board.setBoardAvailable(rs.getInt(6));
 				board.setBoardContentText(rs.getString(7));
+				board.setTopicID(rs.getInt(8));
 				return board;
 			}
 		} catch (Exception e) {

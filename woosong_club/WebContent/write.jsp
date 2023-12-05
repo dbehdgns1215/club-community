@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import="java.io.PrintWriter" %>
+    <%@ page import="java.util.Objects" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +27,12 @@
 <body>
 	<%
 		String userID = null;
+	 	boolean isAdmin = false;
 		if (session.getAttribute("userID") != null) {
 		userID = (String) session.getAttribute("userID");
+	
+        // 로그인한 사용자가 관리자인지 확인
+        isAdmin = Objects.equals(session.getAttribute("userID"), "admin");
 	}
 	%>
 	<nav class="navbar navbar-default">
@@ -91,11 +96,21 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td>
-									<input type="text" class="form-control" placeholder="글 제목" name="boardTitle" maxlength="50">
-								</td>
-							</tr>
-							<tr>
+                            <td>
+                                <div class="form-inline">
+                                    <select id="topic" name="topic" class="form-control" style="width: 15%">
+                                        <option value="2">홍보</option>
+                                        <option value="3">동아리명</option>
+                                        <%-- 관리자인 경우에만 공지사항 옵션 추가 --%>
+                                        <% if (isAdmin) { %>
+                                            <option value="1">공지사항</option>
+                                        <% } %>
+                                    </select>
+                                    <input type="text" class="form-control" placeholder="글 제목" name="boardTitle" maxlength="50" style ="width: 80%" >
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
 								<td>
 									<textarea class="form-control" class="TinyMCE" placeholder="글 내용" name="boardContent" maxlength="2048" style="height: 350px;"></textarea>
 										<script>
@@ -121,6 +136,7 @@
 		</div>
 	</div>
 	<input type="hidden" id="boardContentText" name="boardContentText">
+	
 
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
