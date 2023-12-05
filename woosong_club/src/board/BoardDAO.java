@@ -135,19 +135,32 @@ public class BoardDAO {
 	}
 	
 	public int update(int boardID, String boardTitle, String boardContent, String boardContentText) {
-		String SQL = "UPDATE BOARD SET boardTitle = ?, boardContent = ? boardContentText = ? WHERE boardID = ?";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1,  boardTitle); // boardID
-			pstmt.setString(2,  boardContent); // boardTitle
-			pstmt.setInt(3,  boardID); // 삭제 가능한 상태. boardAvailable
-			pstmt.setString(4,  boardContentText); // boardTitle
-			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -1; // DB 오류
+	    String SQL = "UPDATE BOARD SET boardTitle = ?, boardContent = ?, boardContentText = ? WHERE boardID = ?";
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setString(1, boardTitle);            // boardTitle
+	        pstmt.setString(2, boardContent);          // boardContent
+	        pstmt.setString(3, boardContentText);      // boardContentText
+	        pstmt.setInt(4, boardID);                  // boardID
+
+	        int result = pstmt.executeUpdate();
+
+	        // 추가된 부분: 게시물이 성공적으로 업데이트되면 boardContentText도 업데이트
+	        if (result > 0) {
+	            SQL = "UPDATE BOARD SET boardContentText = ? WHERE boardID = ?";
+	            pstmt = conn.prepareStatement(SQL);
+	            pstmt.setString(1, boardContent);
+	            pstmt.setInt(2, boardID);
+	            pstmt.executeUpdate();
+	        }
+
+	        return result;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return -1; // DB 오류
 	}
+
 	
 	public int delete(int boardID) {
 		String SQL = "UPDATE BOARD SET boardAvailable = 0 WHERE boardID = ?";

@@ -105,32 +105,32 @@
 							<tr>
 								<td>
 									<textarea class="form-control" class="TinyMCE" placeholder="글 내용" name="boardContent" maxlength="2048" style="height: 350px;"><%= board.getBoardContentText() %></textarea>
-										<script>
-										    function convertHtmlToText() {
-										        var editorContent = tinymce.activeEditor.getContent(); // TinyMCE 에디터의 내용을 가져옴
-										        var div = document.createElement("div");
-										        div.innerHTML = editorContent;
-										        var textContent = div.textContent || div.innerText; // 브라우저 호환성을 위해 두 가지 속성을 모두 체크
-										
-										        // 텍스트 내용을 textarea에 넣어줌
-										        document.getElementById("boardContentText").value = textContent;
-										    }
-										
-										    // 글쓰기 버튼 클릭 시 convertHtmlToText 함수 호출
-										    document.getElementById("writeButton").addEventListener("click", convertHtmlToText);
-										</script>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<input type="submit" class="btn btn-primary pull-right" value="수정">
+					<input type="submit" id="updateButton" class="btn btn-primary pull-right" value="수정">
 			</form>
-		</div>
+		</div>	
 	</div>
 	<input type="hidden" id="boardContentText" name="boardContentText">
 	
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="js/bootstrap.js"></script>
+	<script>
+        function convertHtmlToText() {
+            var editorContent = tinymce.activeEditor.getContent();
+            var div = document.createElement("div");
+            div.innerHTML = editorContent;
+            var textContent = div.textContent || div.innerText;
+
+            // 텍스트 내용을 숨겨진 필드에 넣어줌
+            document.getElementById("boardContentText").value = textContent;
+        }
+        
+        // 글쓰기 버튼 클릭 시 convertHtmlToText 함수 호출
+	    document.getElementById("updateButton").addEventListener("click", convertHtmlToText);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
 </body>
 </html>
 
