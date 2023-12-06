@@ -71,9 +71,11 @@
 		
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="main.jsp">메인</a></li>
-				<li class="active"><a href="board.jsp">게시판</a></li>
-			</ul>
+                <li><a href="main.jsp">메인</a></li>
+                <li class="active"><a href="board.jsp">홍보 게시판</a></li>
+                <li><a href="club.jsp">동아리 커뮤니티</a></li>
+                <li><a href="community.jsp">동아리 연합 활동</a></li>
+            </ul>
 				<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle"

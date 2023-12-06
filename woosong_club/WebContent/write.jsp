@@ -102,7 +102,9 @@
                                 <div class="form-inline">
                                     <select id="topic" name="topic" class="form-control" style="width: 15%">
                                         <option value="2">홍보</option>
-                                        <option value="3">동아리명</option>
+                                        <option value="3">자유</option>
+                                        <option value="4">정보</option>
+                                        <option value="5">질문</option>
                                         <%-- 관리자인 경우에만 공지사항 옵션 추가 --%>
                                         <% if (isAdmin) { %>
                                             <option value="1">공지사항</option>

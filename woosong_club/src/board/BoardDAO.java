@@ -129,8 +129,6 @@ public class BoardDAO {
 	
 	public String getTopicName(int topicID) {
         String topicName = "";
-        // 데이터베이스 또는 다른 소스에서 주제 이름을 가져오는 로직을 구현합니다.
-        // switch 문이나 if-else if 문을 사용할 수 있습니다.
         switch (topicID) {
             case 1:
                 topicName = "공지사항";
@@ -139,7 +137,13 @@ public class BoardDAO {
                 topicName = "홍보";
                 break;
             case 3:
-                topicName = "동아리명";
+                topicName = "자유";
+                break;
+            case 4:
+                topicName = "정보";
+                break;
+            case 5:
+                topicName = "질문";
                 break;
             default:
                 topicName = "기타";

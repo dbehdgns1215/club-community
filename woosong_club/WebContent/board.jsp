@@ -53,7 +53,7 @@
 				<li><a href="main.jsp">메인</a></li>
 				<li class="active"><a href="board.jsp">홍보 게시판</a></li>
 				<li><a href="club.jsp">동아리 커뮤니티</a></li>
-				<li><a href="board.jsp">동아리 연합 활동</a></li>
+				<li><a href="community.jsp">동아리 연합 활동</a></li>
 			</ul>
 			<%
 				if (userID == null) {
