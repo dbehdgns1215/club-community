@@ -7,11 +7,16 @@
 <jsp:setProperty name="board" property="boardTitle"/>
 <jsp:setProperty name="board" property="boardContent"/>
 <jsp:setProperty name="board" property="boardContentText"/>
+<jsp:setProperty name="board" property="topicID"/>
 
 <%
     // boardContentText 설정
     String boardContent = request.getParameter("boardContent");
     board.setBoardContentText(boardContent);
+    
+ 	// topicID 설정
+    int topicID = Integer.parseInt(request.getParameter("topic"));
+    board.setTopicID(topicID);
 %>
 
 <!DOCTYPE html>
@@ -45,7 +50,7 @@
 	    	            script.println("</script>");
 	    	    	} else {
 	    	    		BoardDAO boardDAO = new BoardDAO();
-	    	    		int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent(), board.getBoardContentText());
+	    	    		int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent(), board.getBoardContentText(), board.getTopicID());
 	    	            if (result == -1) { // DB 오류 -> 아이디 중복
 	    	                PrintWriter script = response.getWriter();
 	    	                script.println("<script>");

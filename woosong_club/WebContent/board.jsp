@@ -51,7 +51,9 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="main.jsp">메인</a></li>
-				<li class="active"><a href="board.jsp">게시판</a></li>
+				<li class="active"><a href="board.jsp">홍보 게시판</a></li>
+				<li><a href="club.jsp">동아리 커뮤니티</a></li>
+				<li><a href="community.jsp">동아리 연합 활동</a></li>
 			</ul>
 			<%
 				if (userID == null) {
@@ -85,36 +87,58 @@
 			%>
 		</div>
 	</nav>
-	
+	<div class="container">
+        <!-- 공지사항 목록 출력 -->
+        <%
+            BoardDAO boardDAO = new BoardDAO();
+            ArrayList<Board> noticeList = boardDAO.getNoticeList();
+        %>
+        <div class="row">
+            <table class="table table-striped" style="text-align: center; border: 1px solid#dddddd">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="background-color: #eeeeee; text-align: center;">공지사항</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (Board notice : noticeList) { %>
+                        <tr>
+                            <td>
+                                <a href="view.jsp?boardID=<%= notice.getBoardID() %>"><%= notice.getBoardTitle() %></a>
+                            </td>
+                            <td><%= notice.getBoardDate() %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
 	<div class="container">
 		<div class="row">
 			<table class="table table-striped" style ="text-align: center; border: 1px solid#dddddd">
 				<thead>
 					<tr>
 						<th style="background-color: #eeeeee; text-align: center;">번호</th>
+						<th style="background-color: #eeeeee; text-align: center;">주제</th>
 						<th style="background-color: #eeeeee; text-align: center;">제목</th>
 						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
 						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
 					</tr>
 				</thead>
 				<tbody>
-					<%
-						BoardDAO boardDAO = new BoardDAO();
-						ArrayList<Board> list = boardDAO.getList(pageNumber);
-						for (int i =0; i<list.size(); i++) {
-					%>		
-						
-					<tr>
-						<td><%= list.get(i).getBoardID() %></td>
-						<td><a href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"> <%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></a></td>
-						<td><%= list.get(i).getUserID() %></td>
-						<td><%= list.get(i).getBoardDate().substring(11, 13) + ":" + list.get(i).getBoardDate().substring(14, 16) + " " + " [" + list.get(i).getBoardDate().substring(0, 10) + "] "%></td>
-					</tr>
-					
-					<%
-						}
-					%>
-				</tbody>
+                    <% ArrayList<Board> list = boardDAO.getList(pageNumber);
+                       for (int i =0; i<list.size(); i++) {
+                    %>        
+                        <tr>
+                            <td><%= list.get(i).getBoardID() %></td>
+                            <td><%= boardDAO.getTopicName(list.get(i).getTopicID()) %></td>
+                            <td><a href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"> <%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></a></td>
+                            <td><%= list.get(i).getUserID() %></td>
+                            <td><%= list.get(i).getBoardDate().substring(11, 13) + ":" + list.get(i).getBoardDate().substring(14, 16) + " " + " [" + list.get(i).getBoardDate().substring(0, 10) + "] "%></td>
+                        </tr>
+                    <% } %>
+                </tbody>
 			</table>
 			<%
 				if(pageNumber != 1) {

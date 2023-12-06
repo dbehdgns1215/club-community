@@ -9,7 +9,7 @@ public class Board {
 	private String boardContent;
 	private int boardAvailable;
 	private String boardContentText;
-	
+	private int topicID;
 	
 	public int getBoardID() {
 		return boardID;
@@ -53,5 +53,10 @@ public class Board {
     public void setBoardContentText(String boardContentText) {
         this.boardContentText = boardContentText;
     }
-	
+	public int getTopicID() {
+		return topicID;
+	}
+	public void setTopicID(int topicID) {
+		this.topicID = topicID;
+	}
 }
