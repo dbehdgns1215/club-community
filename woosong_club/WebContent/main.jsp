@@ -89,9 +89,10 @@
 	<div class="container">
 		<div class="jumbotron">
 			<div class="container">
-				<h1>웹 사이트 소개</h1>
+				<h1>우송 동아리방</h1>
 				<p>우송대학교 동아리 홍보 및 동아리원들과의 교류 및 동아리간의 소통 등을 위해 만든 웹 사이트입니다.</p>
-				<p><a class="btn btn-primary btn-pull" href="#" role="button">자세히 알아보기</a></p>
+				<p><a class="btn btn-primary btn-pull" href="#" role="button" onclick="showMessage()">자세히 알아보기</a></p>
+				
 				
 				<div class="container">
 					<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -165,6 +166,11 @@
 				</tbody>
 		</div>
 	</div>
+	<script>
+	    function showMessage() {
+	        alert('준비 중입니다.');
+	    }
+	</script>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>
